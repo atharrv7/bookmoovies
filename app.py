@@ -15,6 +15,36 @@ def get_db_connection():
 
 @app.route('/')
 def home():
+    fallback_movies = [
+        {
+            'id': 1,
+            'title': 'Dhurandhar',
+            'genre': 'Action',
+            'duration': '2h 25m',
+            'price': 250,
+            'rating': 4.5,
+            'image_url': 'https://via.placeholder.com/300x400'
+        },
+        {
+            'id': 2,
+            'title': 'Kantara',
+            'genre': 'Thriller',
+            'duration': '2h 30m',
+            'price': 300,
+            'rating': 4.9,
+            'image_url': 'https://via.placeholder.com/300x400'
+        },
+        {
+            'id': 3,
+            'title': 'Project Hail Mary',
+            'genre': 'Sci-Fi',
+            'duration': '2h 10m',
+            'price': 350,
+            'rating': 4.8,
+            'image_url': 'https://via.placeholder.com/300x400'
+        }
+    ]
+
     try:
         db = get_db_connection()
         cursor = db.cursor(dictionary=True)
@@ -23,8 +53,12 @@ def home():
         cursor.close()
         db.close()
     except Exception as e:
-        movies = []
+        movies = fallback_movies
         print('Database error:', e)
+
+    if not movies:
+        movies = fallback_movies
+
     return render_template('index.html', movies=movies)
 
 @app.route('/signup', methods=['GET', 'POST'])
