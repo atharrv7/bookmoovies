@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="booking-container">
+    <div class="glass-card booking-details">
+        <div class="booking-header">
+            <img src="{{ movie.image_url }}" alt="{{ movie.title }}" class="booking-poster">
+            <div class="booking-info">
+                <h2>{{ movie.title }}</h2>
+                <p class="genre">{{ movie.genre }}</p>
+                <p class="rating">⭐ {{ movie.rating }} / 5</p>
+                <p class="price-per-ticket" id="ticket-price" data-price="{{ movie.price }}">Price: ₹{{ movie.price }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card form-box">
+        <h3>Booking Details</h3>
+        <form action="/book/{{ movie.id }}" method="POST">
+            <div class="input-group">
+                <label for="show_date">Select Date</label>
+                <input type="date" id="show_date" name="show_date" required class="glass-input">
+            </div>
+
+            <div class="input-group">
+                <label for="show_time">Select Show Time</label>
+                <select id="show_time" name="show_time" required class="glass-input">
+                    <option value="" disabled selected>Select a time</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="01:30 PM">01:30 PM</option>
+                    <option value="05:00 PM">05:00 PM</option>
+                    <option value="09:00 PM">09:00 PM</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="seats">Number of Seats</label>
+                <input type="number" id="seats" name="seats" min="1" max="10" value="1" required class="glass-input" onchange="updateTotal()">
+            </div>
+            
+            <div class="total-section">
+                <span>Total Amount:</span>
+                <span class="total-amount">₹<span id="total-display">{{ movie.price }}</span></span>
+            </div>
+            
+            <button type="submit" class="btn-neon full-width">Confirm Booking</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function updateTotal() {
+        const price = parseFloat(document.getElementById('ticket-price').getAttribute('data-price'));
+        const seats = parseInt(document.getElementById('seats').value) || 1;
+        document.getElementById('total-display').innerText = (price * seats).toFixed(2);
+    }
+</script>
+{% endblock %}

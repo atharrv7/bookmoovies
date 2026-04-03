@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero glass-card">
+    <h1>Now Showing</h1>
+    <p>Book your favorite movie tickets seamlessly</p>
+</div>
+
+<div class="section-title">
+    <h2>Trending Movies</h2>
+</div>
+
+<div class="movie-grid">
+    {% if movies %}
+        {% for movie in movies %}
+        <div class="glass-card movie-card">
+            <div class="movie-img-container">
+                <img src="{{ movie.image_url }}" alt="{{ movie.title }}" class="movie-poster">
+                <span class="rating-badge">⭐ {{ movie.rating }}</span>
+            </div>
+            
+            <div class="movie-info" style="padding: 20px;">
+                <h3 style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">{{ movie.title }}</h3>
+                <p class="genre" style="color: var(--text-secondary); margin-bottom: 15px;">{{ movie.genre }}</p>
+                <div class="movie-meta" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <span style="font-size: 14px; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 6px;">🕒 {{ movie.duration }}</span>
+                    <span class="price" style="font-size: 16px; font-weight: bold; color: var(--neon-blue);">₹{{ movie.price }}</span>
+                </div>
+                <a href="/book/{{ movie.id }}" class="btn-neon full-width" style="text-align: center;">Book Now</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="glass-card text-center" style="grid-column: 1 / -1; padding: 40px; border-radius: 12px;">
+            <svg style="width: 60px; height: 60px; color: var(--neon-purple); margin: 0 auto 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+            <h3 style="font-size: 24px; font-weight: 600; margin-bottom: 10px;">No movies found</h3>
+            <p style="color: var(--text-secondary);">Please initialize the database to see movies here.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

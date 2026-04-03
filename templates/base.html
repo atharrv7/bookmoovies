@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineGlass - Movie Bookings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+
+    <nav class="glass-nav">
+        <div class="container nav-content">
+            <a href="/" class="logo">🎬 CineGlass</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                {% if session.get('user_id') %}
+                    <li><span class="welcome-text">Hi, {{ session.get('user_name') }}</span></li>
+                    <li><a href="/logout" class="btn-neon-secondary">Logout</a></li>
+                {% else %}
+                    <li><a href="/login" class="btn-neon-secondary">Login</a></li>
+                    <li><a href="/signup" class="btn-neon">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-content">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-messages">
+              {% for message in messages %}
+                <div class="glass-card flash-card">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+</html>

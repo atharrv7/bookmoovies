@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ticket-container">
+    <div class="glass-card ticket-card">
+        <div class="ticket-header">
+            <h2>🎟️ CineGlass Ticket</h2>
+            <div class="ticket-status">Confirmed</div>
+        </div>
+        
+        <div class="ticket-body">
+            <div class="ticket-poster">
+                <img src="{{ booking.image_url }}" alt="{{ booking.title }}">
+            </div>
+            
+            <div class="ticket-details">
+                <h3 class="movie-title">{{ booking.title }}</h3>
+                <p class="movie-genre">{{ booking.genre }}</p>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Date</span>
+                        <span class="info-value">{{ booking.show_date }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Time</span>
+                        <span class="info-value">{{ booking.show_time }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Seats</span>
+                        <span class="info-value">{{ booking.seats }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Total Amount</span>
+                        <span class="info-value">₹{{ booking.total_amount }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Booking ID</span>
+                        <span class="info-value">#CG{{ '%05d' % booking.id }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">User</span>
+                        <span class="info-value">{{ session.get('user_name') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ticket-footer">
+            <div class="barcode">
+                |||||||||||||||||||||||||||||||||||||||||||||||||
+            </div>
+            <p>Show this code at the cinema entrance</p>
+            <a href="/" class="btn-neon full-width" style="margin-top: 20px;">Return to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
